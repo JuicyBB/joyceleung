@@ -1,0 +1,84 @@
+.sticky-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  padding: 2.5rem $container-padding;
+  align-items: center;
+  mix-blend-mode: difference;
+  z-index: 9;
+
+  .brand {
+    font-size: 1.25rem;
+    a {
+      color: $text-color;
+    }
+    span {
+      font-weight: $font-bold;
+    }
+  }
+
+  .menu-toggle {
+    margin-left: auto;
+    position: relative;
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+
+    span {
+      position: absolute;
+      width: 2rem;
+      height: 2px;
+      border-radius: 2px;
+      background-color: $gray-100;
+      transition: 250ms ease-in-out;
+      opacity: 1;
+
+      &:nth-child(1) {
+        top: (2rem / 2) - 0.5rem;
+      }
+      &:nth-child(2), &:nth-child(3) {
+        top: (2rem / 2);
+      }
+      &:nth-child(4) {
+        top: (2rem / 2) + 0.5rem;
+      }
+    }
+
+    &:hover span {
+      &:nth-child(1), &:nth-child(4) {
+        opacity: 0;
+      }
+      &:nth-child(2) {
+        transform: translateY(-0.25rem);
+      }
+      &:nth-child(3) {
+        transform: translateY(0.25rem);
+      }
+    }
+
+    &.toggled span {
+      &:nth-child(1), &:nth-child(4) {
+        opacity: 0;
+      }
+      &:nth-child(2) {
+        transform: rotate(-45deg);
+      }
+      &:nth-child(3) {
+        transform: rotate(45deg);
+      }
+    }
+  }
+}
+
+.menu {
+  display: none;
+  position: fixed;
+
+  ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  }
+}

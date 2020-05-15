@@ -1,0 +1,94 @@
+.services {
+  padding: 6rem 0;
+  display: flex;
+  position: relative;
+
+  .service-outline {
+    position: sticky;
+    top: 22vh;
+    width: 34%;
+    flex-shrink: 0;
+    align-self: flex-start;
+  }
+
+  .service-blocks {
+    margin-left: 12%;
+    width: 40%;
+
+    > div {
+      padding-top: 50vh;
+
+      &:first-child {
+        padding-top: 2rem;
+      }
+    }
+  }
+}
+
+.service-outline {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+
+  ul {
+    a {
+      color: $gray-300;
+      font-weight: $font-bold;
+      line-height: 2.25;
+      font-size: 1.25rem;
+
+      &:hover {
+        color: $gray-200;
+      }
+
+      &.active {
+        color: $text-color;
+      }
+    }
+  }
+}
+
+.service-outline-img {
+  width: 250px;
+
+  img {
+    width: 100%;
+    display: block;
+  }
+}
+
+.service-outline-divider {
+  font-weight: $font-bold;
+  color: $brand-color;
+  position: relative;
+  display: inline-block;
+  margin: 2rem 0 1rem;
+
+  &:before {
+    content: '';
+    display: block;
+    width: 6rem;
+    height: 4px;
+    background-color: $brand-color;
+    position: absolute;
+    left: -6.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.service-block-content {
+  h3 { 
+    font-weight: $font-bold;
+  }
+  h4 {
+    font-size: 2.5rem;
+    line-height: 1.5;
+    margin: 2rem 0;
+  }
+  p {
+    font-size: 1.5rem;
+    line-height: 2;
+  }
+}

@@ -1,0 +1,55 @@
+// Colors
+$brand-color: #EB5757;
+$highlight-color: #64A3D8;
+$alt-color: #EBB957;
+
+// Shades
+$gray-100: #333333;
+$gray-200: #888;
+$gray-300: #c9c9c9;
+$gray-400: #ddd;
+$gray-500: #E5E5E5;
+
+// Base colors
+$text-color: $gray-100;
+
+// Typography
+$font-size-base: 16px;
+
+$line-height-base: 1.6;
+$line-height-header: 1.4;
+$line-height-lg: 1.8;
+
+$font-light: 300;
+$font-normal: 400;
+$font-bold: 700;
+
+// Spacing
+$container: 1560px;
+$container-padding: 4rem;
+
+// Border
+$border-radius: 3.5rem;
+
+// Screens
+$screen-xlg: 1440px;
+$screen-lg: 1280px;
+$screen-md: 1024px;
+$screen-sm: 768px;
+$screen-xs: 414px;
+$screen-xxs: 375px;
+$screen-ip5: 320px;
+
+$screen-xlg-min: $screen-xlg;
+$screen-lg-min: $screen-lg;
+$screen-md-min: $screen-md;
+$screen-sm-min: $screen-sm;
+$screen-xs-min: $screen-xs;
+$screen-xxs-min: $screen-xxs;
+
+$screen-lg-max: $screen-xlg - 1;
+$screen-md-max: $screen-lg - 1;
+$screen-sm-max: $screen-md - 1;
+$screen-xs-max: $screen-sm - 1;
+$screen-xxs-max: $screen-xs - 1;
+$screen-ip5-max: $screen-xxs - 1;
