@@ -1,0 +1,18 @@
+@media only screen and (max-width: 600px) {
+  .test {
+    background-image: url(../img/backgrounds/material-bg-mobile.jpg);
+    background-size: cover;
+    background-position: center top;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .test .testing {
+    padding: 30px 0;
+    font-size: 12px;
+    margin: 0;
+  }
+  .test .test-floating {
+    display: none;
+  }
+}
