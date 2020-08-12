@@ -1,0 +1,177 @@
+.services {
+	display: flex;
+	position: relative;
+
+	.service-outline-wrapper {
+		display: none;
+
+		@include screen-md-up {
+			position: sticky;
+			top: 0;
+			bottom: 0;
+			height: 100vh;
+			width: 34%;
+			flex-shrink: 0;
+			justify-content: flex-end;
+			display: flex;
+		}
+	}
+
+	.service-blocks {
+
+    @include screen-mobile {
+      margin: 2rem 0;
+
+      > div {
+        margin-top: 4rem;
+
+        &:first-child {
+					margin-top: 0;
+				}
+      }
+    }
+
+    @include screen-sm-only {
+      margin: 4rem 0;
+
+      > div {
+        margin-top: 4rem;
+      }
+    }
+
+		@include screen-md-up {
+			padding: 0 0 20vh;
+			margin-left: 12%;
+			width: 40%;
+
+			> div {
+				padding: 40vh 0 0;
+
+				&:first-child {
+					padding-top: 25vh;
+				}
+			}
+		}
+	}
+}
+
+@include screen-md-up {
+	.service-outline {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		justify-content: center;
+		text-align: right;
+
+		ul {
+			a {
+				color: $gray-300;
+				font-weight: $font-bold;
+				line-height: 2.25;
+				font-size: 1.25rem;
+
+				&:hover {
+					color: $gray-200;
+				}
+
+				&.active {
+					color: $text-color;
+				}
+			}
+		}
+	}
+
+	.service-outline-img {
+		width: 250px;
+		height: 250px;
+
+		img {
+			width: 100%;
+			display: block;
+		}
+	}
+
+	.service-outline-divider {
+		font-weight: $font-bold;
+		color: $brand-color;
+		position: relative;
+		display: inline-block;
+		margin: 2rem 0 1rem;
+
+		&:before {
+			content: '';
+			display: block;
+			width: 6rem;
+			height: 4px;
+			background-color: $brand-color;
+			position: absolute;
+			left: -6.5rem;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+	}
+}
+
+.service-block-content {
+	h3 {
+		font-weight: $font-bold;
+	}
+	h4 {
+		font-size: 2.5rem;
+		line-height: 1.5;
+    margin: 2rem 0;
+    
+    @include screen-mobile {
+      font-size: 1.7rem;
+      margin: 1.5rem 0;
+    }
+	}
+	p {
+		font-size: 1.5rem;
+    line-height: 2;
+    
+    @include screen-mobile {
+      font-size: 1.15rem;
+    }
+	}
+	.service-block-image {
+		display: none;
+
+		@include screen-sm-down {
+			display: block;
+			border-radius: $border-radius;
+			padding: 2rem 0;
+			margin-bottom: 4rem;
+
+			img {
+				display: block;
+				width: 280px;
+				margin: 0 auto;
+			}
+    }
+    
+    @include screen-mobile {
+      margin-bottom: 2.5rem;
+
+      img {
+				width: 150px;
+			}
+    }
+	}
+}
+
+#service-web .service-block-image {
+  background-color: #ffe7e7;
+}
+
+#service-ecom .service-block-image {
+  background-color: #d6e9ce;
+}
+
+#service-graphics .service-block-image {
+  background-color: #e6cee9;
+}
+
+#service-support .service-block-image {
+  background-color: #e7f4ff;
+}

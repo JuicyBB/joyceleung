@@ -2,8 +2,9 @@ var gulp = require('gulp'),
 	rimraf = require('rimraf'),
 	concat = require('gulp-concat'),
 	cssmin = require('gulp-cssmin'),
-	uglify = require('gulp-uglify'),
+	uglify = require('gulp-uglify-es').default,
 	sass = require('gulp-sass'),
+	autoprefixer = require('gulp-autoprefixer'),
 	runSequence = require('run-sequence'),
 	realFavicon = require('gulp-real-favicon'),
 	fs = require('fs'),
@@ -11,13 +12,16 @@ var gulp = require('gulp'),
 	webp = require('gulp-webp'),
 	watch = require('gulp-watch'),
 	plumber = require('gulp-plumber');
+connect = require('gulp-connect');
 
 var paths = {
 	output: './dist/',
 	input: './src/',
+	npm: './node_modules/',
 };
 
-paths.js = paths.input + 'js/*.js';
+paths.jsVendor = paths.input + 'js/vendor/*.js';
+paths.jsCustom = paths.input + 'js/*.js';
 paths.sass = paths.input + 'scss/app.scss';
 paths.img = paths.input + 'img/**/*.{jpg,jpeg,png,svg,gif}';
 paths.webp = paths.input + 'img/**/*.{jpg,jpeg,png}';
@@ -27,12 +31,22 @@ paths.cssDistDir = paths.output + 'css';
 paths.imgDistDir = paths.output + 'img';
 
 paths.css = paths.output + 'css/*.css';
+paths.js = paths.output + 'js/*.js';
 paths.minCss = paths.output + 'css/*.min.css';
 paths.minJs = paths.output + 'js/*.min.js';
+paths.html = paths.output + '*.html';
 
 paths.concatJsDest = paths.output + 'js/app.min.js';
 paths.concatCssDest = paths.output + 'css/app.min.css';
 paths.optimizedImgDest = paths.output + 'img/*';
+
+paths.allJs = [
+	paths.npm + 'jquery/dist/jquery.js',
+	paths.npm + 'micromodal/dist/micromodal.js',
+	paths.npm + 'aos/dist/aos.js',
+	paths.jsVendor,
+	paths.jsCustom,
+];
 
 gulp.task('clean:js', function (cb) {
 	rimraf(paths.concatJsDest, cb);
@@ -43,22 +57,36 @@ gulp.task('clean:css', function (cb) {
 gulp.task('clean', ['clean:js', 'clean:css']);
 
 gulp.task('sass', function () {
-	return gulp.src(paths.sass).pipe(plumber()).pipe(sass()).pipe(gulp.dest(paths.cssDistDir));
+	return gulp.src(paths.sass).pipe(plumber()).pipe(sass()).pipe(autoprefixer()).pipe(gulp.dest(paths.cssDistDir));
+});
+
+gulp.task('scripts', function () {
+	return (
+		gulp
+			.src(paths.allJs)
+			.pipe(plumber())
+			.pipe(concat('app.js'))
+			.pipe(gulp.dest(paths.jsDistDir))
+	);
 });
 
 gulp.task('min:js', function () {
 	return gulp
 		.src([paths.js, '!' + paths.minJs], { base: '.' })
 		.pipe(concat(paths.concatJsDest))
+		.pipe(plumber())
 		.pipe(uglify())
-		.pipe(gulp.dest('.'));
+		.pipe(gulp.dest('.'))
+		.pipe(connect.reload());
 });
 gulp.task('min:css', function () {
 	return gulp
 		.src([paths.css, '!' + paths.minCss])
+		.pipe(plumber())
 		.pipe(concat(paths.concatCssDest))
 		.pipe(cssmin())
-		.pipe(gulp.dest('.'));
+		.pipe(gulp.dest('.'))
+		.pipe(connect.reload());
 });
 gulp.task('min', ['min:js', 'min:css']);
 
@@ -74,18 +102,33 @@ gulp.task('convert:webp', function () {
 });
 gulp.task('optimize-images', ['clean:img', 'optimize:img', 'convert:webp']);
 
-// RUN DEFAULT TASKS
-gulp.task('default', function (done) {
-	runSequence('clean', 'sass', 'min', 'optimize-images', function () {
+gulp.task('build', function (done) {
+	runSequence('clean', 'sass', 'scripts', 'min', 'optimize-images', function () {
 		done();
 	});
 });
 
-gulp.task('watch', ['default'], function () {
-	gulp.watch('src/scss/**/*.scss', ['clean:css', 'sass', 'min:css']);
-	gulp.watch('src/js/**/*.js', ['clean:js', 'min:js']);
-	gulp.watch('src/img/**/*', ['optimize-images']);
+gulp.task('connect', function () {
+	connect.server({
+		livereload: true,
+		root: paths.output,
+		port: 8888,
+	});
 });
+
+gulp.task('html', function () {
+	gulp.src(paths.html).pipe(gulp.dest(paths.output)).pipe(connect.reload());
+});
+
+gulp.task('watch', function () {
+	gulp.watch('src/scss/**/*.scss', ['clean:css', 'sass', 'min:css']);
+	gulp.watch('src/js/**/*.js', ['clean:js', 'scripts', 'min:js']);
+	gulp.watch('src/img/**/*', ['optimize-images']);
+	gulp.watch([paths.html], ['html']);
+});
+
+// RUN DEFAULT TASKS
+gulp.task('default', ['build', 'connect', 'watch']);
 
 // File where the favicon markups are stored
 var FAVICON_DATA_FILE = paths.input + 'favicon/faviconData.json';
@@ -162,7 +205,7 @@ gulp.task('generate-favicon', function (done) {
 // as is or refactor your existing HTML pipeline.
 gulp.task('inject-favicon-markups', function () {
 	return gulp
-		.src(['./index.html'])
+		.src(['dist/index.html', 'dist/index2.html'])
 		.pipe(realFavicon.injectFaviconMarkups(JSON.parse(fs.readFileSync(FAVICON_DATA_FILE)).favicon.html_code))
 		.pipe(gulp.dest('./'));
 });

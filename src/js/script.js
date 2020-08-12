@@ -1,96 +1,138 @@
-$( document ).ready(function(){
+$(function () {
+	var menu = $('#menu'),
+		toggle = $('#menu-toggle, #menu-link-list a'),
+		toggleBtn = $('#menu-toggle'),
+		body = $('body');
 
-  //Init wow JS
-  var wow = new WOW({
-    offset: 100,
-    mobile: false
-  });
-
-  var progress = 0;
-  var timer = setInterval(function() {
-    if(progress > 90) {
-      wow.init();
-      clearInterval(timer);
-    }
-  },500);
-
-
-  // Preloader
-  $("body").queryLoader2({
-    backgroundColor: "#cc1235",
-    barColor: "#fff",
-    barHeight: 5,
-    percentage: true,
-    completeAnimation: "fade",
-    fadeOutTime: 2000,
-    onProgress: function(e) {
-      progress = e;
-    }
-  });
-
-  //wow.init();
-
-
-  // Init offcanvas menu
-  $(".button-collapse").sideNav({
-    closeOnClick: true
-  });
-
-  //Init scrollspy
-  $('body').scrollspy({
-    target: '#nav',
-    offset: 61
-  });
-
-  $("[data-featherlight='image']").featherlight({
-    closeOnClick: 'anywhere',
-    closeIcon: ''
-  });
-
-  // Navigation scroll style change
-  $(function() {
-    var header = $('#nav');
-    var lastScrollTop = 0;
-    function scrollHandler() {
-      var scroll = $(window).scrollTop();
-      if (scroll >= 100) {
-        header.removeClass('nav-transparent');
-      }
-      else {
-        header.addClass('nav-transparent');
-      }
-    }
-    $(window).scroll(scrollHandler);
-    scrollHandler();
-  });
-
-  // Smooth scrolling for anchored links
-  $(function () {
-    $('a[href*=#]:not([href=#])').click(function (event) {
-      event.preventDefault();
-      var $root = $('html, body');
-      var offset_value = 59; //already set in scroll spy
-      if ($(document).width() < 768) {
-        offset_value = 50;
-      }
-      $root.animate({
-        scrollTop: $( $.attr(this, 'href') ).offset().top - offset_value
-      }, 500);
-    });
-  });
-
-  // Tumblr blog feed
-  window.onload=function(){
-    for (var i=0;i<4;i++) {
-      var thisPost = tumblr_api_read.posts[i];
-      // var _date = thisPost.date;
-      // var dateArray = _date.split(' ');
-      // var month = dateArray[2];
-      // var day = dateArray[1];
-      if(thisPost.type=="photo"){
-        $('#tumblr_feed').append("<div class=\"col m3 s6\"><div class=\"card hoverable\"><div class=\"card-image\"><img src=\"" + thisPost["photo-url-500"] + "\"/></div><div class=\"card-action\"><a href=\"" + thisPost.url + "\" target=\"_blank\" class=\"tumblr-feed-link\">View Post</a></div></div></div>");
-      }
-    }
-  }
-
+	toggle.click(function () {
+		if (body.hasClass('menu-open')) {
+			menu.removeClass('active');
+			toggleBtn.removeClass('active');
+			body.removeClass('menu-open');
+		} else {
+			menu.addClass('active');
+			toggleBtn.addClass('active');
+			body.addClass('menu-open');
+		}
+	});
 });
+
+$(function () {
+	const $desktop = '(min-width: 1080px)';
+	const mq = window.matchMedia($desktop);
+
+	if (mq.matches) {
+		console.log('match')
+		// Cache selectors
+		var lastId,
+			outlineImage = $('#service-image img'),
+			topMenu = $('#service-list'),
+			menuItems = topMenu.find('a'),
+			// Anchors corresponding to menu items
+			scrollItems = menuItems.map(function () {
+				var item = $($(this).attr('href'));
+				if (item.length) {
+					return item;
+				}
+			});
+
+		// Bind to scroll
+		$(window).scroll(function () {
+			// Get container scroll position
+			var fromTop = $(this).scrollTop();
+			// Get id of current scroll item
+			var cur = scrollItems.map(function () {
+				if ($(this).offset().top < fromTop + 200) return this;
+			});
+			// Get the id of the current element
+			cur = cur[cur.length - 1];
+			var id = cur && cur.length ? cur[0].id : 'service-web';
+			if (lastId !== id) {
+				lastId = id;
+				// Set/remove active class
+				menuItems
+					.removeClass('active')
+					.end()
+					.find("[href='\\#" + id + "']")
+					.addClass('active');
+				outlineImage.attr('src', 'img/svg/' + id + '.svg');
+			}
+		});
+	}
+});
+
+$(function () {
+	var titleEl = $('.modal-title'),
+		imgEl = $('.modal-image'),
+		descEl = $('.modal-description'),
+		modalEl = $('.modal');
+
+	MicroModal.init({
+		// onShow: (modal) => console.info(`${modal.id} is shown`),
+		// onClose: (modal) => console.info(`${modal.id} is hidden`),
+		// debugMode: true,
+		awaitCloseAnimation: true,
+	});
+
+	$('a[data-micromodal-trigger="modal"]').click(function (e) {
+		e.preventDefault();
+
+		var target = e.currentTarget,
+			title = $(target).find('.graphic-title').text(),
+			imgSrc = $(target).attr('href'),
+			desc = $(target).find('.graphic-desc').text(),
+			id = title.toLowerCase().replace(/ /g, '-');
+
+		titleEl.text(title);
+		imgEl.html('<img src="' + imgSrc + '" alt="' + title + '"/>');
+		modalEl.attr('id', id);
+		descEl.text(desc);
+	});
+});
+
+// Smooth scrolling for anchored links
+$(function () {
+	var smoothLinks = $('a[href*=\\#]:not([href=\\#])');
+	smoothLinks.click(function (event) {
+		event.preventDefault();
+		var offset_value = 0;
+		$('html, body').animate({
+			scrollTop: $( $.attr(this, 'href') ).offset().top - offset_value
+		}, 520);
+	});
+});
+
+// $( document ).ready(function(){
+
+//   //Init wow JS
+//   var wow = new WOW({
+//     offset: 100,
+//     mobile: false
+//   });
+
+//   var progress = 0;
+//   var timer = setInterval(function() {
+//     if(progress > 90) {
+//       wow.init();
+//       clearInterval(timer);
+//     }
+//   },500);
+
+//   // Preloader
+//   $("body").queryLoader2({
+//     backgroundColor: "#cc1235",
+//     barColor: "#fff",
+//     barHeight: 5,
+//     percentage: true,
+//     completeAnimation: "fade",
+//     fadeOutTime: 2000,
+//     onProgress: function(e) {
+//       progress = e;
+//     }
+//   });
+
+//   //wow.init();
+
+
+
+// });

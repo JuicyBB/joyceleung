@@ -1,0 +1,99 @@
+// Anchor highlight for desktop only
+@mixin anchor-highlight($height: 1rem, $color: $alt-color) {
+	z-index: 1;
+	position: relative;
+	display: inline-block;
+
+	@include screen-sm-up {
+		&:after {
+			content: '';
+			position: absolute;
+			display: block;
+			bottom: 0;
+			left: 0;
+			width: 0;
+			height: $height;
+			background-color: $color;
+			transition: width 250ms ease-in-out;
+			z-index: -1;
+		}
+
+		&:hover {
+			&:after {
+				width: 100%;
+			}
+		}
+	}
+}
+
+// Reset button
+@mixin reset-button {
+	border: none;
+	margin: 0;
+	padding: 0;
+	width: auto;
+	overflow: visible;
+	background: transparent;
+	cursor: pointer;
+
+	/* inherit font & color from ancestor */
+	color: inherit;
+	font: inherit;
+
+	/* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+	line-height: normal;
+
+	/* Corrects font smoothing for webkit */
+	-webkit-font-smoothing: inherit;
+	-moz-osx-font-smoothing: inherit;
+
+	/* Corrects inability to style clickable `input` types in iOS */
+	-webkit-appearance: none;
+
+	/* Remove excess padding and border in Firefox 4+ */
+	&::-moz-focus-inner {
+		border: 0;
+		padding: 0;
+	}
+}
+
+@mixin create-button(
+	$border-width: 1px,
+	$border-color: $text-color,
+	$bg: #fff,
+	$color: $text-color,
+	$padding: 0 1.25rem,
+	$height: 2.8rem,
+	$font-size: $font-size-base,
+	$focus-color: rgba($brand-color, 0.5),
+) {
+	@include reset-button;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 6rem;
+	border-radius: $border-radius;
+	padding: $padding;
+	height: $height;
+	border-width: $border-width;
+	border-style: solid;
+	border-color: $border-color;
+	color: $color;
+	background-color: $bg;
+	font-size: $font-size;
+	transition: all 200ms ease-in-out;
+
+	&:hover {
+		background-color: darken($bg, 5%);
+	}
+
+	&:focus {
+		outline: none;
+		box-shadow: 0 0 0 4px #{$focus-color};
+	}
+
+	&:active {
+		transform: scale(0.95);
+		background-color: darken($bg, 8%);
+	}
+}
