@@ -1,7 +1,7 @@
 $(function () {
 	AOS.init({
 		// Global settings:
-		disable: false, // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
+		disable: 'mobile', // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
 		startEvent: 'DOMContentLoaded', // name of the event dispatched on the document, that AOS should initialize on
 		initClassName: 'aos-init', // class applied after initialization
 		animatedClassName: 'aos-animate', // class applied on animation
@@ -23,10 +23,10 @@ $(function () {
 
 $(function () {
 	var menu = $('#menu'),
-	toggle = $('#menu-toggle, #menu-link-list a'),
-	toggleBtn = $('#menu-toggle'),
-	body = $('body');
-	
+		toggle = $('#menu-toggle, #menu-link-list a'),
+		toggleBtn = $('#menu-toggle'),
+		body = $('body');
+
 	toggle.click(function () {
 		if (body.hasClass('menu-open')) {
 			menu.removeClass('active');
@@ -43,22 +43,21 @@ $(function () {
 $(function () {
 	const $desktop = '(min-width: 1080px)';
 	const mq = window.matchMedia($desktop);
-	
+
 	if (mq.matches) {
-		console.log('match');
 		// Cache selectors
 		var lastId,
-		outlineImage = $('#service-image img'),
-		topMenu = $('#service-list'),
-		menuItems = topMenu.find('a'),
-		// Anchors corresponding to menu items
-		scrollItems = menuItems.map(function () {
-			var item = $($(this).attr('href'));
-			if (item.length) {
-				return item;
-			}
-		});
-		
+			outlineImage = $('#service-image img'),
+			topMenu = $('#service-list'),
+			menuItems = topMenu.find('a'),
+			// Anchors corresponding to menu items
+			scrollItems = menuItems.map(function () {
+				var item = $($(this).attr('href'));
+				if (item.length) {
+					return item;
+				}
+			});
+
 		// Bind to scroll
 		$(window).scroll(function () {
 			// Get container scroll position
@@ -74,10 +73,10 @@ $(function () {
 				lastId = id;
 				// Set/remove active class
 				menuItems
-				.removeClass('active')
-				.end()
-				.find("[href='\\#" + id + "']")
-				.addClass('active');
+					.removeClass('active')
+					.end()
+					.find("[href='\\#" + id + "']")
+					.addClass('active');
 				outlineImage.attr('src', 'img/svg/' + id + '.svg');
 			}
 		});
@@ -86,26 +85,26 @@ $(function () {
 
 $(function () {
 	var titleEl = $('.modal-title'),
-	imgEl = $('.modal-image'),
-	descEl = $('.modal-description'),
-	modalEl = $('.modal');
-	
+		imgEl = $('.modal-image'),
+		descEl = $('.modal-description'),
+		modalEl = $('.modal');
+
 	MicroModal.init({
 		// onShow: (modal) => console.info(`${modal.id} is shown`),
 		// onClose: (modal) => console.info(`${modal.id} is hidden`),
 		// debugMode: true,
 		awaitCloseAnimation: true,
 	});
-	
+
 	$('a[data-micromodal-trigger="modal"]').click(function (e) {
 		e.preventDefault();
-		
+
 		var target = e.currentTarget,
-		title = $(target).find('.graphic-title').text(),
-		imgSrc = $(target).attr('href'),
-		desc = $(target).find('.graphic-desc').text(),
-		id = title.toLowerCase().replace(/ /g, '-');
-		
+			title = $(target).find('.graphic-title').text(),
+			imgSrc = $(target).attr('href'),
+			desc = $(target).find('.graphic-desc').text(),
+			id = title.toLowerCase().replace(/ /g, '-');
+
 		titleEl.text(title);
 		imgEl.html('<img src="' + imgSrc + '" alt="' + title + '"/>');
 		modalEl.attr('id', id);
@@ -124,40 +123,39 @@ $(function () {
 				scrollTop: $($.attr(this, 'href')).offset().top - offset_value,
 			},
 			520,
-			);
-		});
+		);
 	});
-	
-	// $( document ).ready(function(){
-	
-	//   //Init wow JS
-	//   var wow = new WOW({
-	//     offset: 100,
-	//     mobile: false
-	//   });
-	
-	//   var progress = 0;
-	//   var timer = setInterval(function() {
-	//     if(progress > 90) {
-	//       wow.init();
-	//       clearInterval(timer);
-	//     }
-	//   },500);
-	
-	//   // Preloader
-	//   $("body").queryLoader2({
-	//     backgroundColor: "#cc1235",
-	//     barColor: "#fff",
-	//     barHeight: 5,
-	//     percentage: true,
-	//     completeAnimation: "fade",
-	//     fadeOutTime: 2000,
-	//     onProgress: function(e) {
-	//       progress = e;
-	//     }
-	//   });
-	
-	//   //wow.init();
-	
-	// });
-	
+});
+
+// $( document ).ready(function(){
+
+//   //Init wow JS
+//   var wow = new WOW({
+//     offset: 100,
+//     mobile: false
+//   });
+
+//   var progress = 0;
+//   var timer = setInterval(function() {
+//     if(progress > 90) {
+//       wow.init();
+//       clearInterval(timer);
+//     }
+//   },500);
+
+//   // Preloader
+//   $("body").queryLoader2({
+//     backgroundColor: "#cc1235",
+//     barColor: "#fff",
+//     barHeight: 5,
+//     percentage: true,
+//     completeAnimation: "fade",
+//     fadeOutTime: 2000,
+//     onProgress: function(e) {
+//       progress = e;
+//     }
+//   });
+
+//   //wow.init();
+
+// });
