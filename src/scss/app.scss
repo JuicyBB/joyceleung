@@ -1,12 +1,18 @@
 @import './vendor/reset';
 @import './vendor/normalize';
+// @import './vendor/font-awesome/font-awesome';
+@import './vendor/aos/aos';
 
 @import './app/variables';
+@import './app/media';
+@import './app/mixins';
 @import './app/base';
 @import './app/sticky-header';
+@import './app/menu';
 @import './app/hero';
 @import './app/services';
 @import './app/projects';
 @import './app/graphics';
 @import './app/about';
 @import './app/footer';
+@import './app/modal';

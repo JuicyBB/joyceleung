@@ -1,84 +1,87 @@
 .sticky-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  padding: 2.5rem $container-padding;
-  align-items: center;
-  mix-blend-mode: difference;
-  z-index: 9;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	padding: 0 $container-padding;
+	height: $navbar-height;
+	align-items: center;
+	mix-blend-mode: difference;
+	z-index: $sticky-bar-zindex;
 
-  .brand {
-    font-size: 1.25rem;
-    a {
-      color: $text-color;
-    }
-    span {
-      font-weight: $font-bold;
-    }
-  }
+	transition: left 300ms ease-in-out;
+	transition-delay: 300ms;
 
-  .menu-toggle {
-    margin-left: auto;
-    position: relative;
-    width: 2rem;
-    height: 2rem;
-    cursor: pointer;
+	@include screen-mobile {
+		padding: 0 $container-mobile-padding;
+		height: $navbar-mobile-height;
+	}
 
-    span {
-      position: absolute;
-      width: 2rem;
-      height: 2px;
-      border-radius: 2px;
-      background-color: $gray-100;
-      transition: 250ms ease-in-out;
-      opacity: 1;
+	.brand {
+		font-size: 1.25rem;
+		a {
+			color: $text-color;
+		}
+		span {
+			font-weight: $font-bold;
+		}
+	}
 
-      &:nth-child(1) {
-        top: (2rem / 2) - 0.5rem;
-      }
-      &:nth-child(2), &:nth-child(3) {
-        top: (2rem / 2);
-      }
-      &:nth-child(4) {
-        top: (2rem / 2) + 0.5rem;
-      }
-    }
+	.menu-toggle {
+		margin-left: auto;
+		position: relative;
+		width: 2rem;
+		height: 2rem;
+		cursor: pointer;
 
-    &:hover span {
-      &:nth-child(1), &:nth-child(4) {
-        opacity: 0;
-      }
-      &:nth-child(2) {
-        transform: translateY(-0.25rem);
-      }
-      &:nth-child(3) {
-        transform: translateY(0.25rem);
-      }
-    }
+		span {
+			position: absolute;
+			width: 2rem;
+			height: 2px;
+			border-radius: 2px;
+			background-color: $gray-100;
+			transition: 250ms ease-in-out;
+			opacity: 1;
 
-    &.toggled span {
-      &:nth-child(1), &:nth-child(4) {
-        opacity: 0;
-      }
-      &:nth-child(2) {
-        transform: rotate(-45deg);
-      }
-      &:nth-child(3) {
-        transform: rotate(45deg);
-      }
-    }
-  }
-}
+			&:nth-child(1) {
+				top: (2rem / 2) - 0.5rem;
+			}
+			&:nth-child(2),
+			&:nth-child(3) {
+				top: (2rem / 2);
+			}
+			&:nth-child(4) {
+				top: (2rem / 2) + 0.5rem;
+			}
+		}
 
-.menu {
-  display: none;
-  position: fixed;
+		@include screen-mouse {
+			&:hover span {
+				&:nth-child(1),
+				&:nth-child(4) {
+					opacity: 0;
+				}
+				&:nth-child(2) {
+					transform: translateY(-0.25rem);
+				}
+				&:nth-child(3) {
+					transform: translateY(0.25rem);
+				}
+			}
+		}
 
-  ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  }
+		&.active span {
+			&:nth-child(1),
+			&:nth-child(4) {
+				opacity: 0;
+			}
+			&:nth-child(2) {
+				transform: rotate(-45deg);
+			}
+			&:nth-child(3) {
+				transform: rotate(45deg);
+			}
+		}
+	}
 }

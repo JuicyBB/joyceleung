@@ -1,42 +1,75 @@
 .project-block {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
   padding: 6rem 0;
+  flex-direction: column;
+  min-height: 90vh;
 
-  &:nth-child(even) {
-    flex-direction: row-reverse;
+  @include screen-md-up {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    // &:nth-child(even) {
+    //   flex-direction: row-reverse;
+    // }
+  }
+
+  @include screen-mobile {
+    padding: 3rem 0;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
   }
 }
 
 .project-block-img {
-  width: 50% - 8%;
-  padding: 16rem 0 6rem;
+  @include screen-md-up {
+    width: 50% - 8%;
+  }
 
   picture, img {
-    display: block;
-    width: 100%;
+    display: inline-block;
+    margin: 0 auto 2rem;;
+    max-width: 100%;
+
+    @include screen-md-up {
+      width: 100%;
+      display: block;
+    }
   }
+
 }
 
 .project-block-content {
-  width: 50%;
-  position: sticky;
-  top: 22vh;
-  align-self: flex-start;
+  @include screen-md-up {
+    width: 50%;
+  }
 
   h3 {
     font-size: 2.5rem;
     margin: 2rem 0;
+
+    @include screen-mobile {
+      font-size: 2rem;
+    }
   }
   h4 {
     font-weight: $font-bold;
+
+    @include screen-mobile {
+      font-size: 0.85rem;
+    }
   }
 }
 
 .project-block-description {
   font-size: 1.25rem;
   line-height: 2;
+
+  @include screen-mobile {
+    font-size: 1rem;
+  }
 }
 
 .project-block-specs {
@@ -47,8 +80,18 @@
   font-weight: $font-bold;
   margin-top: 2.5rem;
 
+  @include screen-mobile {
+    font-size: 0.75rem;
+    flex-wrap: wrap;
+  }
+
   .project-spec-block {
     width: 33%;
+
+    @include screen-mobile {
+      width: 50%;
+      margin-bottom: 1.5rem;
+    }
   }
 
   ul {

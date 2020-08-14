@@ -2,7 +2,7 @@ var gulp = require('gulp'),
 	rimraf = require('rimraf'),
 	concat = require('gulp-concat'),
 	cssmin = require('gulp-cssmin'),
-	uglify = require('gulp-uglify'),
+	uglify = require('gulp-uglify-es').default,
 	sass = require('gulp-sass'),
 	autoprefixer = require('gulp-autoprefixer'),
 	runSequence = require('run-sequence'),
@@ -11,11 +11,14 @@ var gulp = require('gulp'),
 	imagemin = require('gulp-imagemin'),
 	webp = require('gulp-webp'),
 	watch = require('gulp-watch'),
-	plumber = require('gulp-plumber');
+	plumber = require('gulp-plumber'),
+	responsive = require('gulp-responsive'),
+	connect = require('gulp-connect');
 
 var paths = {
 	output: './dist/',
 	input: './src/',
+	npm: './node_modules/',
 };
 
 paths.jsVendor = paths.input + 'js/vendor/*.js';
@@ -23,19 +26,24 @@ paths.jsCustom = paths.input + 'js/*.js';
 paths.sass = paths.input + 'scss/app.scss';
 paths.img = paths.input + 'img/**/*.{jpg,jpeg,png,svg,gif}';
 paths.webp = paths.input + 'img/**/*.{jpg,jpeg,png}';
+paths.responsive = paths.input + 'img/**/*.{jpg,jpeg,png}';
 
 paths.jsDistDir = paths.output + 'js';
 paths.cssDistDir = paths.output + 'css';
 paths.imgDistDir = paths.output + 'img';
+paths.imgPlaceholderDistDir = paths.output + 'img/placeholders';
 
 paths.css = paths.output + 'css/*.css';
 paths.js = paths.output + 'js/*.js';
 paths.minCss = paths.output + 'css/*.min.css';
 paths.minJs = paths.output + 'js/*.min.js';
+paths.html = paths.output + '*.html';
 
 paths.concatJsDest = paths.output + 'js/app.min.js';
 paths.concatCssDest = paths.output + 'css/app.min.css';
 paths.optimizedImgDest = paths.output + 'img/*';
+
+paths.allJs = [paths.npm + 'jquery/dist/jquery.js', paths.npm + 'micromodal/dist/micromodal.js', paths.npm + 'aos/dist/aos.js', paths.jsVendor, paths.jsCustom];
 
 gulp.task('clean:js', function (cb) {
 	rimraf(paths.concatJsDest, cb);
@@ -46,31 +54,30 @@ gulp.task('clean:css', function (cb) {
 gulp.task('clean', ['clean:js', 'clean:css']);
 
 gulp.task('sass', function () {
-	return gulp
-		.src(paths.sass)
-		.pipe(plumber())
-		.pipe(sass())
-		.pipe(autoprefixer())
-		.pipe(gulp.dest(paths.cssDistDir));
+	return gulp.src(paths.sass).pipe(plumber()).pipe(sass()).pipe(autoprefixer()).pipe(gulp.dest(paths.cssDistDir));
 });
 
 gulp.task('scripts', function () {
-	return gulp.src([paths.jsVendor, paths.jsCustom]).pipe(concat('app.js')).pipe(gulp.dest(paths.jsDistDir));
+	return gulp.src(paths.allJs).pipe(plumber()).pipe(concat('app.js')).pipe(gulp.dest(paths.jsDistDir));
 });
 
 gulp.task('min:js', function () {
 	return gulp
 		.src([paths.js, '!' + paths.minJs], { base: '.' })
 		.pipe(concat(paths.concatJsDest))
+		.pipe(plumber())
 		.pipe(uglify())
-		.pipe(gulp.dest('.'));
+		.pipe(gulp.dest('.'))
+		.pipe(connect.reload());
 });
 gulp.task('min:css', function () {
 	return gulp
 		.src([paths.css, '!' + paths.minCss])
+		.pipe(plumber())
 		.pipe(concat(paths.concatCssDest))
 		.pipe(cssmin())
-		.pipe(gulp.dest('.'));
+		.pipe(gulp.dest('.'))
+		.pipe(connect.reload());
 });
 gulp.task('min', ['min:js', 'min:css']);
 
@@ -79,25 +86,52 @@ gulp.task('clean:img', function (cb) {
 	rimraf(paths.optimizedImgDest, cb);
 });
 gulp.task('optimize:img', function () {
-	return gulp.src(paths.img).pipe(imagemin()).pipe(gulp.dest(paths.imgDistDir));
+	return gulp
+		.src(paths.img)
+		.pipe(imagemin({ verbose: true }))
+		.pipe(gulp.dest(paths.imgDistDir));
+});
+gulp.task('create:placeholders', function () {
+	return gulp
+		.src(paths.responsive)
+		.pipe(imagemin([
+			imagemin.mozjpeg({quality: 4, progressive: true, smooth: 100}),
+		],{ verbose: true }))
+		.pipe(gulp.dest(paths.imgPlaceholderDistDir));
 });
 gulp.task('convert:webp', function () {
 	return gulp.src(paths.webp).pipe(webp()).pipe(gulp.dest(paths.imgDistDir));
 });
 gulp.task('optimize-images', ['clean:img', 'optimize:img', 'convert:webp']);
+gulp.task('create-placeholders', ['create:placeholders']);
 
-// RUN DEFAULT TASKS
-gulp.task('default', function (done) {
+gulp.task('build', function (done) {
 	runSequence('clean', 'sass', 'scripts', 'min', 'optimize-images', function () {
 		done();
 	});
 });
 
-gulp.task('watch', ['default'], function () {
+gulp.task('connect', function () {
+	connect.server({
+		livereload: true,
+		root: paths.output,
+		port: 8888,
+	});
+});
+
+gulp.task('html', function () {
+	gulp.src(paths.html).pipe(gulp.dest(paths.output)).pipe(connect.reload());
+});
+
+gulp.task('watch', function () {
 	gulp.watch('src/scss/**/*.scss', ['clean:css', 'sass', 'min:css']);
 	gulp.watch('src/js/**/*.js', ['clean:js', 'scripts', 'min:js']);
 	gulp.watch('src/img/**/*', ['optimize-images']);
+	gulp.watch([paths.html], ['html']);
 });
+
+// RUN DEFAULT TASKS
+gulp.task('default', ['build', 'connect', 'watch']);
 
 // File where the favicon markups are stored
 var FAVICON_DATA_FILE = paths.input + 'favicon/faviconData.json';
@@ -174,9 +208,9 @@ gulp.task('generate-favicon', function (done) {
 // as is or refactor your existing HTML pipeline.
 gulp.task('inject-favicon-markups', function () {
 	return gulp
-		.src(['./index.html'])
+		.src(['dist/index.html', 'dist/index2.html'])
 		.pipe(realFavicon.injectFaviconMarkups(JSON.parse(fs.readFileSync(FAVICON_DATA_FILE)).favicon.html_code))
-		.pipe(gulp.dest('./'));
+		.pipe(gulp.dest('favicon/'));
 });
 
 // Check for updates on RealFaviconGenerator (think: Apple has just
