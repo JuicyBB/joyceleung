@@ -16,7 +16,7 @@ var gulp = require('gulp'),
 	connect = require('gulp-connect');
 
 var paths = {
-	output: './dist/',
+	output: './docs/',
 	input: './src/',
 	npm: './node_modules/',
 };
@@ -208,7 +208,7 @@ gulp.task('generate-favicon', function (done) {
 // as is or refactor your existing HTML pipeline.
 gulp.task('inject-favicon-markups', function () {
 	return gulp
-		.src(['dist/index.html', 'dist/index2.html'])
+		.src([paths.output + 'index.html', paths.output +'index2.html'])
 		.pipe(realFavicon.injectFaviconMarkups(JSON.parse(fs.readFileSync(FAVICON_DATA_FILE)).favicon.html_code))
 		.pipe(gulp.dest('favicon/'));
 });
