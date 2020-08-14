@@ -1538,7 +1538,8 @@ ul.menu-contact-links {
         margin-left: 1rem; } }
 
 .hero {
-  height: 100vh;
+  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1562,7 +1563,7 @@ ul.menu-contact-links {
   line-height: 1.4; }
   @media (max-width: 767px) {
     .hero-content {
-      padding: 0 2rem; } }
+      padding: 2rem 2rem; } }
   .hero-content h1 {
     font-size: 3rem;
     font-weight: 300; }
