@@ -1,0 +1,61 @@
+{
+  "name": "joyceleung",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portfolio",
+  "main": "index.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JuicyBB/joyceleung.git"
+  },
+  "author": "Joyce Leung",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JuicyBB/joyceleung/issues"
+  },
+  "homepage": "https://github.com/JuicyBB/joyceleung#readme",
+  "scripts": {
+    "build": "node_modules/.bin/gulp build",
+    "watch": "node_modules/.bin/gulp watch",
+    "gulp": "node_modules/.bin/gulp default",
+    "sass": "node_modules/.bin/gulp sass",
+    "scripts": "node_modules/.bin/gulp scripts",
+    "favicon:generate": "node_modules/.bin/gulp generate-favicon",
+    "favicon:html": "node_modules/.bin/gulp inject-favicon-markups",
+    "favicon": "npm run favicon:generate && favicon:html",
+    "images": "node_modules/.bin/gulp optimize-images",
+    "webp": "node_modules/.bin/gulp convert:webp"
+  },
+  "devDependencies": {
+    "aos": "^2.3.4",
+    "gulp": "3.9.1",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-connect": "^2.3.1",
+    "gulp-cssmin": "0.2.0",
+    "gulp-imagemin": "^7.1.0",
+    "gulp-livereload": "^4.0.2",
+    "gulp-plumber": "^1.2.1",
+    "gulp-real-favicon": "^0.3.2",
+    "gulp-responsive": "^3.0.1",
+    "gulp-sass": "3.0.0",
+    "gulp-uglify": "3.0.2",
+    "gulp-uglify-es": "^2.0.0",
+    "gulp-watch": "^5.0.1",
+    "gulp-webp": "^3.0.0",
+    "jquery": "^3.5.1",
+    "micromodal": "^0.4.6",
+    "normalize.css": "^8.0.1",
+    "rimraf": "2.6.3",
+    "run-sequence": "2.2.1",
+    "wow.js": "^1.2.2"
+  },
+  "dependencies": {},
+  "browserslist": [
+    "last 2 versions",
+    "Safari >= 10",
+    "iOS >= 10",
+    "not ie <= 10",
+    "> 1%"
+  ]
+}

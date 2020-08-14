@@ -1,0 +1,86 @@
+// Media queries
+
+// Special
+@mixin screen-touch {
+	@media (max-width: $screen-sm-max) and (hover: none) and (pointer: coarse), (max-width: $screen-xs-max) {
+		@content;
+	}
+}
+@mixin screen-mouse {
+	@media (min-width: $screen-md-min), (hover: hover) and (pointer: fine) {
+		@content;
+	}
+}
+
+// Max widths
+@mixin screen-mobile {
+	@media (max-width: $screen-xs-max) {
+		@content;
+	}
+}
+@mixin screen-sm-down {
+	@media (max-width: $screen-sm-max) {
+		@content;
+	}
+}
+@mixin screen-md-down {
+	@media (max-width: $screen-md-max) {
+		@content;
+	}
+}
+@mixin screen-lg-down {
+	@media (max-width: $screen-lg-max) {
+		@content;
+	}
+}
+
+// Min widths
+@mixin screen-xs-up {
+	@media (min-width: $screen-xs-min) {
+		@content;
+	}
+}
+@mixin screen-sm-up {
+	@media (min-width: $screen-sm-min) {
+		@content;
+	}
+}
+@mixin screen-md-up {
+	@media (min-width: $screen-md-min) {
+		@content;
+	}
+}
+@mixin screen-lg-up {
+	@media (min-width: $screen-lg-min) {
+		@content;
+	}
+}
+
+// Breakpoints
+@mixin screen-xs-only {
+	@media (min-width: $screen-xs-min) and (max-width: $screen-xs-max) {
+		@content;
+	}
+}
+@mixin screen-sm-only {
+	@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+		@content;
+	}
+}
+@mixin screen-md-only {
+	@media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+		@content;
+	}
+}
+@mixin screen-lg-only {
+	@media (min-width: $screen-lg-min) and (max-width: $screen-lg-max) {
+		@content;
+	}
+}
+
+// Between
+@mixin screen-between($min, $max) {
+	@media (min-width: $min) and (max-width: $max) {
+		@content;
+	}
+}

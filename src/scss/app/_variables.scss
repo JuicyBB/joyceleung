@@ -1,0 +1,89 @@
+// Colors
+$brand-color: #BB4F4F;
+// $brand-color: #d06868;
+$highlight-color: #64A3D8;
+$brand-comp-color: #4FBBBB;
+$brand-tri-1-color: #85BB4F;
+$brand-tri-2-color: #854FBB;
+$brand-ana-color: #ffa600;
+$darken-brand-color: darken($brand-color, 8%);
+// $alt-color: saturate($darken-brand-color, 15%);
+$alt-color: $brand-ana-color;
+
+// Shades
+$gray-100: #333333;
+$gray-200: #888;
+$gray-300: #a8a8a8;
+$gray-400: #ddd;
+$gray-500: #E5E5E5;
+
+// Base colors
+$text-color: $gray-100;
+
+// Typography
+$font-size-base: 16px;
+
+$line-height-base: 1.6;
+$line-height-header: 1.4;
+$line-height-lg: 1.8;
+
+$font-light: 300;
+$font-normal: 400;
+$font-bold: 700;
+
+// Spacing
+$container: 1560px;
+$container-padding: 4rem;
+$container-mobile-padding: 2rem;
+
+// Header
+$navbar-height: 7rem;
+$navbar-mobile-height: 4.5rem;
+
+// Border
+$border-radius: 3.5rem;
+
+// Z-index
+$menu-screen-zindex: 19;
+$sticky-bar-zindex: 20;
+$modal-zindex: 30;
+
+// Menu
+$menu-width: calc(50vw + #{$border-radius});
+$navbar-left-offset: calc(100vw - #{$menu-width});
+$menu-bg-width: 50vw;
+
+// Animation
+$effect1: cubic-bezier(0.58, 0.01, 0.12, 1.04);
+$effect2: cubic-bezier(0.96, 0, 0.35, 0.75);
+
+// About
+$about-bg-color: #6996a9;
+$avatar-tablet-width: 16rem;
+$avatar-mobile-width: 100%;
+
+// Screens
+$screen-xxlg: 1580px;
+$screen-xlg: 1440px;
+$screen-lg: 1280px;
+$screen-md: 1080px; // from 1024px
+$screen-sm: 768px;
+$screen-xs: 414px;
+$screen-xxs: 375px;
+$screen-ip5: 320px;
+
+$screen-xxlg-min: $screen-xxlg;
+$screen-xlg-min: $screen-xlg;
+$screen-lg-min: $screen-lg;
+$screen-md-min: $screen-md;
+$screen-sm-min: $screen-sm;
+$screen-xs-min: $screen-xs;
+$screen-xxs-min: $screen-xxs;
+
+$screen-xlg-max: $screen-xxlg - 1;
+$screen-lg-max: $screen-xlg - 1;
+$screen-md-max: $screen-lg - 1;
+$screen-sm-max: $screen-md - 1;
+$screen-xs-max: $screen-sm - 1;
+$screen-xxs-max: $screen-xs - 1;
+$screen-ip5-max: $screen-xxs - 1;
