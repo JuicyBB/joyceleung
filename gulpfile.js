@@ -145,7 +145,7 @@ gulp.task('generate-favicon', function (done) {
 		{
 			masterPicture: paths.input + 'favicon/favicon.png',
 			dest: paths.output + 'favicon',
-			iconsPath: '/',
+			iconsPath: '/favicon/',
 			design: {
 				ios: {
 					pictureAspect: 'noChange',
@@ -177,6 +177,9 @@ gulp.task('generate-favicon', function (done) {
 					pictureAspect: 'noChange',
 					themeColor: '#ffffff',
 					manifest: {
+						name: "Joyce Leung Vancouver freelance web developer",
+						short_name: "Joyce Leung",
+						description: "Vancouver based web developer and designer. Digital services include websites, apps, logos, maintenance, and more.",
 						display: 'standalone',
 						orientation: 'notSet',
 						onConflict: 'override',
