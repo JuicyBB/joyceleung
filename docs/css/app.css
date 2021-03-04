@@ -1565,7 +1565,10 @@ ul.menu-contact-links {
   @media (max-width: 1079px) {
     .hero-content {
       width: 100%;
-      margin-top: 7rem;
+      margin-top: calc(45vh - 3.5rem);
+      background-color: #fff;
+      border-top-left-radius: 3.5rem;
+      border-top-right-radius: 3.5rem;
       -webkit-box-flex: 1;
           -ms-flex-positive: 1;
               flex-grow: 1;
@@ -1581,9 +1584,8 @@ ul.menu-contact-links {
               flex-direction: column; } }
   @media (max-width: 767px) {
     .hero-content {
-      padding: 2rem 2rem;
-      background-color: #fff;
       margin-top: calc(45vh - 2rem);
+      padding: 2rem 2rem;
       border-top-left-radius: 2rem;
       border-top-right-radius: 2rem; } }
   .hero-content h1 {

@@ -19,7 +19,10 @@
 
   @include screen-sm-down {
     width: 100%;
-    margin-top: $navbar-height;
+    margin-top: calc(45vh - #{$border-radius});
+    background-color: #fff;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
     flex-grow: 1;
     display: flex;
     justify-content: center;
@@ -27,9 +30,8 @@
   }
 
   @include screen-mobile {
-    padding: 2rem $container-mobile-padding;
-    background-color: #fff;
     margin-top: calc(45vh - 2rem);
+    padding: 2rem $container-mobile-padding;
     border-top-left-radius: 2rem;
     border-top-right-radius: 2rem;
   }
