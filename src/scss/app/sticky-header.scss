@@ -7,7 +7,7 @@
 	padding: 0 $container-padding;
 	height: $navbar-height;
 	align-items: center;
-	mix-blend-mode: difference;
+	// mix-blend-mode: difference;
 	z-index: $sticky-bar-zindex;
 
 	transition: left 300ms ease-in-out;

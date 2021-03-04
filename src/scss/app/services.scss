@@ -20,10 +20,10 @@
 	.service-blocks {
 
     @include screen-mobile {
-      margin: 2rem 0;
+      margin: 4rem 0;
 
       > div {
-        margin-top: 4rem;
+        margin-top: 8rem;
 
         &:first-child {
 					margin-top: 0;
