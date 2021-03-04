@@ -1541,6 +1541,7 @@ ul.menu-contact-links {
 
 .hero {
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
