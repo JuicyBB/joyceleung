@@ -51,9 +51,17 @@
 	max-width: 90vw;
 	border-radius: $border-radius;
 	margin: 0 1.5rem;
+	overflow: hidden;
 
 	@include screen-mobile {
-		border-radius: $border-radius / 2;
+		border-top-left-radius: $border-radius / 2;
+		border-top-right-radius: $border-radius / 2;
+		border-bottom-right-radius: 0px;
+		border-bottom-left-radius: 0px;
+		align-self: flex-end;
+		margin: 0;
+		width: 100%;
+		max-width: none;
 	}
 }
 
